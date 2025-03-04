@@ -1,0 +1,24 @@
+{
+  "name": "cypressproj",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-allure":"npx cypress run - spec ./**js - reporter mocha-allure-reporter - env allure=true run --headed",
+    "allure-report":"allure generate --single-file allure-results --clean -o allure-reports",
+    "execute:report" :"npm run test-allure && npm run allure-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "allure-commandline": "^2.32.2",
+    "cypress": "^14.0.3",
+    "mocha-allure-reporter": "^1.4.0",
+    "save-dev": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "@shelex/cypress-allure-plugin": "^2.40.2"
+  }
+}
