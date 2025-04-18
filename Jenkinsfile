@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   tools {
-    nodejs "NodeJS_23" // Use the NodeJS version configured in Jenkins
+    nodejs "NodeJS_23" // Make sure this is defined in Jenkins > Global Tool Configuration
   }
 
   environment {
@@ -16,35 +16,56 @@ pipeline {
       }
     }
 
+    stage('Verify Environment') {
+      steps {
+        sh 'node -v'
+        sh 'npm -v'
+        sh 'npx cypress --version'
+      }
+    }
+
     stage('Install Dependencies') {
       steps {
-        sh 'npm install'
+        // Clean install ensures a fresh and consistent setup
+        sh 'npm ci || npm install'
       }
     }
 
     stage('Run Cypress Tests') {
       steps {
+        // Run with mochawesome reporter (must be configured in your package.json)
         sh 'npx cypress run'
       }
     }
 
     stage('Publish HTML Report') {
       steps {
-        publishHTML(target: [
-          allowMissing: true,
-          alwaysLinkToLastBuild: true,
-          keepAll: true,
-          reportDir: 'cypress/reports/mochawesome',
-          reportFiles: 'mochawesome.html',
-          reportName: 'Mochawesome Report'
-        ])
+        script {
+          // Check if mochawesome report folder exists before publishing
+          if (fileExists('cypress/reports/mochawesome/mochawesome.html')) {
+            publishHTML(target: [
+              allowMissing: false,
+              alwaysLinkToLastBuild: true,
+              keepAll: true,
+              reportDir: 'cypress/reports/mochawesome',
+              reportFiles: 'mochawesome.html',
+              reportName: 'Mochawesome Report'
+            ])
+          } else {
+            echo 'No mochawesome report found to publish.'
+          }
+        }
       }
     }
   }
 
   post {
     always {
+      echo "Archiving screenshots and videos (if any)..."
       archiveArtifacts artifacts: 'cypress/screenshots/**,cypress/videos/**', allowEmptyArchive: true
+    }
+    failure {
+      echo "Build failed. Check logs for details."
     }
   }
 }
