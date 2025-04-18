@@ -34,15 +34,15 @@ module.exports = defineConfig({
   
       // Excel task
       on("task", {
-        readExcelData({ file, sheet }) {
-          const filePath = path.join(process.cwd(), file); // Always relative to project root
+        readExcelData() {
+          const filePath = path.resolve(__dirname, 'cypress/fixtures/credentials.xlsx'); // hardcoded path
           const workbook = XLSX.readFile(filePath);
-          const worksheet = workbook.Sheets[sheet];
+          const worksheet = workbook.Sheets["Sheet1"]; // replace with your actual sheet name
           const jsonData = XLSX.utils.sheet_to_json(worksheet);
           return jsonData;
         }
       });
-  
+      
       return config;
     }
   }
