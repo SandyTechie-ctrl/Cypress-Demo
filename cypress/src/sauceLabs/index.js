@@ -1,4 +1,4 @@
-import { TIMEOUT } from "../sauceLabs/constants/constants"
+import { DEFAULT_TIMEOUT } from "../sauceLabs/constants/constants"
 
 export function login(username, password) {
     cy.get('input[id="user-name"]').type(username);
@@ -8,7 +8,7 @@ export function login(username, password) {
 
 export function loadUrl() {
     cy.visit('https://www.saucedemo.com/')
-    cy.get('div[class="login_logo"]', {setTimeout: TIMEOUT}).should('be.visible');
+    cy.get('div[class="login_logo"]', {setTimeout: DEFAULT_TIMEOUT}).should('be.visible');
 }
 
 export function errorCheck() {

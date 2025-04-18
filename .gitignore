@@ -4,3 +4,5 @@
 /mochawesome-report
 *.lock
 yarn.lock
+/cypress/reports
+/cypress/screenshots
