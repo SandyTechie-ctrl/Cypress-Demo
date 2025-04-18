@@ -16,7 +16,7 @@ module.exports = defineConfig({
   e2e: {
     specPattern: [
       'cypress/**/*.cy.js',
-      'cypress/features/*.feature'
+      'cypress/features/**/*.feature'
     ],
     supportFile: 'cypress/support/e2e.js', // or whatever your support file is
     stepDefinitions: 'cypress/step_definitions/*.js', // ✅ <-- ADD THIS
