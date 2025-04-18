@@ -33,9 +33,9 @@ module.exports = defineConfig({
       require('cypress-mochawesome-reporter/plugin')(on);
   
       // Excel task
-      on('task', {
+      on("task", {
         readExcelData({ file, sheet }) {
-          const filePath = path.resolve(__dirname, file);
+          const filePath = path.join(process.cwd(), file); // Always relative to project root
           const workbook = XLSX.readFile(filePath);
           const worksheet = workbook.Sheets[sheet];
           const jsonData = XLSX.utils.sheet_to_json(worksheet);
