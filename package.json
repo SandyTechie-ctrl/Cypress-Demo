@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test-allure":"npx cypress run - spec ./**js - reporter mocha-allure-reporter - env allure=true run --headed",
-    "allure-report":"allure generate --single-file allure-results --clean -o allure-reports",
-    "execute:report" :"npm run test-allure && npm run allure-report"
+    "execute-tests-saucelabs": "npm run clean-reports && npx cypress run --spec 'cypress/e2e/spec.cy.js' --reporter mochawesome --headed && npm run mochawesome-report",
+    "clean-reports": "rm -rf cypress/reports/html/.jsons/* cypress/reports/html/* mochawesome-report/*.html",
+    "mochawesome-report": "npx mochawesome-report-generator cypress/reports/html/.jsons/mochawesome.json -o cypress/reports/html/",
+    "execute-tests-orangehrm": "npm run clean-reports && npx cypress run --spec 'cypress/orangeHRM/tests/tests.cy.js' --reporter mochawesome --headed && npm run mochawesome-report"
   },
   "keywords": [],
   "author": "",
@@ -14,11 +14,23 @@
   "description": "",
   "dependencies": {
     "allure-commandline": "^2.32.2",
-    "cypress": "^14.0.3",
+    "fs": "^0.0.1-security",
     "mocha-allure-reporter": "^1.4.0",
-    "save-dev": "^0.0.1-security"
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@shelex/cypress-allure-plugin": "^2.40.2"
+    "@badeball/cypress-cucumber-preprocessor": "^22.0.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.4",
+    "@shelex/cypress-allure-plugin": "^2.40.2",
+    "cypress": "^14.3.0",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-mochawesome-reporter": "^3.8.2",
+    "esbuild": "^0.25.2",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^5.0.0",
+    "mochawesome-report-generator": "^6.2.0"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
   }
 }
