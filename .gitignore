@@ -1,2 +1,6 @@
 /node_modules
 /cypress/fixtures
+.DS_Store
+/mochawesome-report
+*.lock
+yarn.lock
