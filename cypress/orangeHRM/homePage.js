@@ -29,9 +29,9 @@ export function addNewUser() {
     cy.get('h6').contains('Add User').should('be.visible')
     cy.contains('label', 'User Role').parent('div').siblings('div').find('div').contains('-- Select --').click();
     cy.get('div[role="option"]').contains('Admin').click();
-    cy.get('input[placeholder="Type for hints..."]').type('John M Doe')
+    cy.get('input[placeholder="Type for hints..."]').type('Emily Jones')
     cy.wait(2000);
-    cy.get('div[role="option"]').contains('John M Doe').click();
+    cy.get('div[role="option"]').contains('Emily Jones').click();
     cy.contains('label', 'Status').parent('div').siblings('div').find('div').contains('-- Select --').click();
     cy.get('div[role="option"]').contains('Enabled').click();
     cy.contains('label', 'Username').parent('div').siblings('div').find('input').type(generateString);
